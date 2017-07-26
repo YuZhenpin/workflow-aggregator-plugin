@@ -1,4 +1,4 @@
-TAG=$(shell date -I -u)
+TAG=local3
 IMAGE=jenkinsci/workflow-demo
 DOCKER_RUN=docker run --rm -p 127.0.0.1:2222:2222 -p 127.0.0.1:8080:8080 -p 127.0.0.1:8081:8081 -p 127.0.0.1:9418:9418 -ti
 
@@ -18,8 +18,11 @@ copy-plugins:
 	  cp -v $$hpi plugins/$$a.jpi; \
 	done
 
-build: copy-plugins
+
+build:
 	docker build -t $(IMAGE):$(TAG) .
+
+copy-build: copy-plugins build
 
 run: build
 	$(DOCKER_RUN) $(IMAGE):$(TAG)

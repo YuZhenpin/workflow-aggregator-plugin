@@ -33,7 +33,10 @@ RUN echo '<settings><mirrors><mirror><id>central</id><url>http://repo.jenkins-ci
     /usr/local/maven/bin/mvn -s settings.xml -f repo install && /usr/local/maven/bin/mvn -s settings.xml -f repo/sometests -Dmaven.test.failure.ignore clean install
 
 USER root
-COPY plugins /usr/share/jenkins/ref/plugins
+RUN apt-get install -y maven
+COPY plugins.txt /root/plugins.txt
+COPY copy-plugins.sh /root/copy-plugins.sh
+RUN /root/copy-plugins.sh
 RUN chown -R jenkins.jenkins /usr/share/jenkins/ref/plugins
 USER jenkins
 
