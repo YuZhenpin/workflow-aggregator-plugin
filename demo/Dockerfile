@@ -33,8 +33,8 @@ RUN echo '<settings><mirrors><mirror><id>central</id><url>http://repo.jenkins-ci
     /usr/local/maven/bin/mvn -s settings.xml -f repo install && /usr/local/maven/bin/mvn -s settings.xml -f repo/sometests -Dmaven.test.failure.ignore clean install
 
 USER root
-COPY plugins.txt /usr/share/jenkins/ref/plugins.txt
-RUN chown -R jenkins.jenkins /usr/share/jenkins/ref/plugins.txt
+COPY plugins /usr/share/jenkins/ref/plugins
+RUN chown -R jenkins.jenkins /usr/share/jenkins/ref/plugins
 USER jenkins
 
 # Now copy the complete repo including Pipeline script (not only the files needed to warm up the Maven cache).
